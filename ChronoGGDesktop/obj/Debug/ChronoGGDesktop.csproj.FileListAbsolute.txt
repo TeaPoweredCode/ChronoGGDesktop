@@ -1,0 +1,15 @@
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\bin\Debug\ChronoGGDesktopWPF.exe.config
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktopWPF.exe
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktopWPF.pdb
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\bin\Debug\ChronoGGDesktopWPF.exe
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\bin\Debug\ChronoGGDesktopWPF.pdb
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktop.csprojResolveAssemblyReference.cache
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\MainWindow.baml
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\Style.baml
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\App.baml
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\MainWindow.g.cs
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\App.g.cs
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktopWPF_MarkupCompile.cache
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktopWPF.g.resources
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktopWPF.Properties.Resources.resources
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\ChronoGGDesktop.csproj.GenerateResource.Cache
