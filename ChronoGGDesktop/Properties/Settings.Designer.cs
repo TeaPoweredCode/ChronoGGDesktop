@@ -34,5 +34,41 @@ namespace ChronoGGDesktopWPF.Properties {
                 this["Partner"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideOnClose {
+            get {
+                return ((bool)(this["HideOnClose"]));
+            }
+            set {
+                this["HideOnClose"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowOnNewGame {
+            get {
+                return ((bool)(this["ShowOnNewGame"]));
+            }
+            set {
+                this["ShowOnNewGame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StarOnBoot {
+            get {
+                return ((bool)(this["StarOnBoot"]));
+            }
+            set {
+                this["StarOnBoot"] = value;
+            }
+        }
     }
 }

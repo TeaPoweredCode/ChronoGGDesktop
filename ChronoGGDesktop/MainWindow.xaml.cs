@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 
 
@@ -23,49 +19,48 @@ namespace ChronoGGDesktopWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        DispatcherTimer PartnerChangeTimer = new DispatcherTimer();
         string SteamUrl;
 
         public MainWindow()
         {
             InitializeComponent();
+            this.Width = 220;
 
-            SupportorCombo.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
+            LoadSettings();
+            GetRSSData();
+        }
 
-
+        private void GetRSSData()
+        {
             XmlDocument rssXmlDoc = new XmlDocument();
             rssXmlDoc.Load("https://community.chrono.gg/c/daily-deals.rss");
-
             XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
-            StringBuilder rssContent = new StringBuilder();
+
+            string title = GetNoteAttribute(rssNodes[0], "title");
+            string description = GetNoteAttribute(rssNodes[0], "description");
+            //string link = GetNoteAttribute(rssNodes[0], "link");
+
+            string gameUrl, steamLink;
+            GetDescriptionUrls(description, out gameUrl, out steamLink);
 
 
-            string title = "";
-            string description = "";
+            BitmapImage logo = new BitmapImage(new Uri(gameUrl));
+            SteamUrl = steamLink;
 
-            foreach (XmlNode rssNode in rssNodes)
-            {
-                XmlNode rssSubNode = rssNode.SelectSingleNode("title");
-                 title = rssSubNode != null ? rssSubNode.InnerText : "";
+            TitleLable.Content = title;
+            GameImage.Source = logo;
+        }
 
-                rssSubNode = rssNode.SelectSingleNode("link");
-                string link = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                rssSubNode = rssNode.SelectSingleNode("description");
-                description = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                rssContent.Append("<a href='" + link + "'>" + title + "</a><br>" + description);
-                break;
-            }
-
-
-            string gameUrl = "";
-            string steamLink = "";
+        private static void GetDescriptionUrls(string description, out string gameUrl, out string steamLink)
+        {
+            gameUrl = "";
+            steamLink = "";
 
             var linkParser = new Regex(@"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match m in linkParser.Matches(description))
             {
-                if(m.Value.EndsWith(".jpg"))
+                if (m.Value.EndsWith(".jpg"))
                     gameUrl = m.Value;
 
                 if (m.Value.StartsWith("http://store.steampowered"))
@@ -74,24 +69,19 @@ namespace ChronoGGDesktopWPF
                 if (gameUrl != "" && steamLink != "")
                     break;
             }
-
-            SteamUrl = steamLink;
-
-            BitmapImage logo = new BitmapImage();
-            logo.BeginInit();
-            logo.UriSource = new Uri(gameUrl);
-            logo.EndInit();
-
-            TitleLable.Content = title + title + title;
-            GameImage.Source = logo;
-            
-
         }
 
+        private string GetNoteAttribute(XmlNode node , string name)
+        {
+            return node.SelectSingleNode(name) != null ? node.SelectSingleNode(name).InnerText : "";
+        }
 
         private void CloseX_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            if (Properties.Settings.Default.HideOnClose)
+                this.Hide();
+            else
+                this.Close();
         }
 
         private void GameImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -109,5 +99,66 @@ namespace ChronoGGDesktopWPF
         {
             System.Diagnostics.Process.Start(SteamUrl);
         }
+
+        private void SettingsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (GameCanvas.Visibility == System.Windows.Visibility.Visible)
+            {
+                GameCanvas.Visibility = System.Windows.Visibility.Hidden;
+                SettingsCanvas.Margin = new Thickness(10, 45, 0, 0);
+            }
+            else
+            {
+                GameCanvas.Visibility = System.Windows.Visibility.Visible;
+                SettingsCanvas.Margin = new Thickness(225, 45, 0, 0);
+            }
+        }
+
+
+        private void LoadSettings()
+        {
+            PartnerTextBox.Text = Properties.Settings.Default.Partner;
+            StarOnBootCheckBox.IsChecked = Properties.Settings.Default.StarOnBoot;
+            HideOnCloseCheckBox.IsChecked = Properties.Settings.Default.HideOnClose;
+            ShowOnNewGameCheckBox.IsChecked = Properties.Settings.Default.ShowOnNewGame;
+        }
+
+        private void PartnerTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Properties.Settings.Default.Partner = PartnerTextBox.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void HideOnCloseChanged(object sender, RoutedEventArgs e)
+        {
+            bool isCheck = HideOnCloseCheckBox.IsChecked ?? false;
+
+            double opacity = isCheck ? 1.0 : 0.5;
+            PopOnNewGameLable.Opacity = opacity;
+            ShowOnNewGameCheckBox.Opacity = opacity;
+
+            ShowOnNewGameCheckBox.IsHitTestVisible = isCheck;
+            ShowOnNewGameCheckBox.Focusable = isCheck;
+
+            if(!isCheck)
+                ShowOnNewGameCheckBox.IsChecked = false;
+
+            Properties.Settings.Default.HideOnClose = isCheck;
+            Properties.Settings.Default.Save();
+           
+        }
+
+        private void StarOnBootChanged(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.StarOnBoot = StarOnBootCheckBox.IsChecked ?? false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ShowOnNewGameChanged(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ShowOnNewGame = ShowOnNewGameCheckBox.IsChecked ?? false;
+            Properties.Settings.Default.Save();
+        }
+
     }
 }

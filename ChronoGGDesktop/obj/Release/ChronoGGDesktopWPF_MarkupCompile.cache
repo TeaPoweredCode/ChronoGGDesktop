@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Debug\
+E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\obj\Release\
 ChronoGGDesktopWPF
 none
 false
-DEBUG;TRACE
+TRACE
 E:\Work\Git\ChronoGGDesktop\ChronoGGDesktop\App.xaml
 2-1103542647
 
-91756474955
-14-435414735
+7-1228476669
+15564802499
 MainWindow.xaml;Style.xaml;
 
 False
