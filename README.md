@@ -11,4 +11,3 @@ Dont forget to check the Chrone [Chrono.gg](https://chrono.gg/) with this deskto
 * Popup if hiden on new game
 * Open links
 * Postion app
----
