@@ -1,8 +1,4 @@
-﻿using Hardcodet.Wpf.TaskbarNotification;
-using System;
-using System.IO;
-using System.Net;
-using System.Text;
+﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,16 +15,44 @@ namespace ChronoGGDesktopWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer PartnerChangeTimer = new DispatcherTimer();
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
         string SteamUrl;
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();           
+            this.ShowActivated = false;
             this.Width = 220;
 
             LoadSettings();
+
+            GetRSSData();                       
+            StartDailyTimer();
+        }
+
+        private void StartDailyTimer()
+        {       
+            DateTime utcNow = DateTime.UtcNow;
+            DateTime NewGameTime = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddHours(17);
+
+            if (utcNow.Hour >= 17)
+                NewGameTime = NewGameTime.AddDays(1);
+
+            TimeSpan duration = NewGameTime - utcNow;
+
+            int ensureChangeDelay = 5;
+            int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
+            dispatcherTimer.Interval = new TimeSpan(0, targetMinutes , 0);
+            dispatcherTimer.Start();
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
             GetRSSData();
+            dispatcherTimer.Interval = new TimeSpan(24, 0, 0);
+
+            if(Properties.Settings.Default.ShowOnNewGame)
+                this.Show();            
         }
 
         private void GetRSSData()
@@ -44,11 +68,10 @@ namespace ChronoGGDesktopWPF
             string gameUrl, steamLink;
             GetDescriptionUrls(description, out gameUrl, out steamLink);
 
-
             BitmapImage logo = new BitmapImage(new Uri(gameUrl));
             SteamUrl = steamLink;
 
-            TitleLable.Content = title;
+            TitleTextBox.Text = title;
             GameImage.Source = logo;
         }
 
@@ -84,18 +107,18 @@ namespace ChronoGGDesktopWPF
                 this.Close();
         }
 
-        private void GameImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
 
-        private void SteamButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ChronoLink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://chrono.gg/" + Properties.Settings.Default.Partner);
+        }
+
+        private void SteamButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start(SteamUrl);
         }
