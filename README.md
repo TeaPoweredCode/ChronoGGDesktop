@@ -7,8 +7,11 @@ Dont forget to check the Chrone [Chrono.gg](https://chrono.gg/) with this deskto
 ---
 #Still do do
 
-* Start on boot
+* ~~Start on boot~~
 * ~~Popup if hiden on new game~~
 * ~~Open links~~
-* Postion app
-* Handel no internet
+* ~~Postion app~~
+* ~~Handel no internet~~
+
+* Test Start on boot
+* Test new game timer

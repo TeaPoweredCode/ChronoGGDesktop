@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +17,8 @@ namespace ChronoGGDesktopWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        DispatcherTimer NewGameTimer = new DispatcherTimer();        
+        bool loadedOk = true;
         string SteamUrl;
 
         public MainWindow()
@@ -42,37 +45,52 @@ namespace ChronoGGDesktopWPF
 
             int ensureChangeDelay = 5;
             int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
-            dispatcherTimer.Interval = new TimeSpan(0, targetMinutes , 0);
-            dispatcherTimer.Start();
+            NewGameTimer.Interval = new TimeSpan(0, targetMinutes , 0);
+            NewGameTimer.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             GetRSSData();
-            dispatcherTimer.Interval = new TimeSpan(24, 0, 0);
+            NewGameTimer.Interval = new TimeSpan(24, 0, 0);
 
             if(Properties.Settings.Default.ShowOnNewGame)
                 this.Show();            
         }
 
+        private void PlaceLowerRight()
+        {
+            Rect desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width - 10;
+            this.Top = desktopWorkingArea.Bottom - this.Height - 10;
+        }
+
         private void GetRSSData()
         {
-            XmlDocument rssXmlDoc = new XmlDocument();
-            rssXmlDoc.Load("https://community.chrono.gg/c/daily-deals.rss");
-            XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
+            try
+            {
+                XmlDocument rssXmlDoc = new XmlDocument();
+                rssXmlDoc.Load("https://community.chrono.gg/c/daily-deals.rss");
+                XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
 
-            string title = GetNoteAttribute(rssNodes[0], "title");
-            string description = GetNoteAttribute(rssNodes[0], "description");
-            //string link = GetNoteAttribute(rssNodes[0], "link");
+                string title = GetNoteAttribute(rssNodes[0], "title");
+                string description = GetNoteAttribute(rssNodes[0], "description");
+                //string link = GetNoteAttribute(rssNodes[0], "link");
 
-            string gameUrl, steamLink;
-            GetDescriptionUrls(description, out gameUrl, out steamLink);
+                string gameUrl, steamLink;
+                GetDescriptionUrls(description, out gameUrl, out steamLink);
 
-            BitmapImage logo = new BitmapImage(new Uri(gameUrl));
-            SteamUrl = steamLink;
+                BitmapImage logo = new BitmapImage(new Uri(gameUrl));
+                SteamUrl = steamLink;
 
-            TitleTextBox.Text = title;
-            GameImage.Source = logo;
+                TitleTextBox.Text = title;
+                GameImage.Source = logo;
+            }
+            catch
+            {
+                loadedOk = false;
+                TitleTextBox.Text = "Unable to read rss";
+            }
         }
 
         private static void GetDescriptionUrls(string description, out string gameUrl, out string steamLink)
@@ -115,12 +133,18 @@ namespace ChronoGGDesktopWPF
 
         private void ChronoLink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://chrono.gg/" + Properties.Settings.Default.Partner);
+            OpenUrl("https://chrono.gg/" + Properties.Settings.Default.Partner);
         }
 
         private void SteamButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start(SteamUrl);
+            OpenUrl(SteamUrl);
+        }
+
+        private void OpenUrl(string url)
+        {
+            if (loadedOk)
+                System.Diagnostics.Process.Start(url);
         }
 
         private void SettingsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -174,6 +198,7 @@ namespace ChronoGGDesktopWPF
         private void StarOnBootChanged(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.StarOnBoot = StarOnBootCheckBox.IsChecked ?? false;
+            RegisterInStartup(Properties.Settings.Default.StarOnBoot);
             Properties.Settings.Default.Save();
         }
 
@@ -183,5 +208,39 @@ namespace ChronoGGDesktopWPF
             Properties.Settings.Default.Save();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            string[] coords = Properties.Settings.Default.Postion.Split(',');
+            if(coords.Length == 2)
+            {
+                this.Left = int.Parse(coords[0]);
+                this.Top = int.Parse(coords[1]);
+            }
+            else
+            {
+                PlaceLowerRight();
+            }
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Properties.Settings.Default.Postion = this.Left + "," + this.Top;
+            Properties.Settings.Default.Save();
+        }
+
+        private void RegisterInStartup(bool isChecked)
+        {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Assembly curAssembly = Assembly.GetExecutingAssembly();
+           
+            if (isChecked)
+            {
+                registryKey.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+            }
+            else
+            {
+                registryKey.DeleteValue("ApplicationName");
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:commands="clr-namespace:Samples.Commands"
-        Title="MainWindow" Height="270" Width="430" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FF281236" Icon="/Resources/Chrono.ico">
+        Title="MainWindow" Height="270" Width="430" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FF281236" Icon="/Resources/Chrono.ico" Loaded="Window_Loaded">
 
     <Grid>
 
@@ -31,7 +31,7 @@
                Margin="-2,0,-128,0"
                VerticalAlignment="Top"
                Width="350"
-               Source="/Resources/CGGLogo.jpg" MouseDown="Image_MouseDown"/>
+               Source="/Resources/CGGLogo.jpg" MouseDown="Image_MouseDown" MouseUp="Image_MouseUp"/>
         <Label x:Name="CloseX" Content="Close" HorizontalAlignment="Left" Margin="174,243,0,-3" VerticalAlignment="Top" Width="42" MouseLeftButtonUp="CloseX_MouseLeftButtonUp" Height="30" Background="{x:Null}" Foreground="#FFFFCC00" FontWeight="Bold" ForceCursor="True" Cursor="Hand"/>
         <Label x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Margin="8,243,0,-3" Width="57" Background="{x:Null}" Foreground="#FFFFCC00" FontWeight="Bold" ForceCursor="True" Cursor="Hand" MouseLeftButtonDown="SettingsButton_MouseLeftButtonDown"/>
         <Canvas x:Name="GameCanvas" HorizontalAlignment="Left" Height="200" Margin="10,45,0,0" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.395,0.495">
