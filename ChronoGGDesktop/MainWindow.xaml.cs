@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml;
+using System.Windows.Forms;
 
 
 namespace ChronoGGDesktopWPF
@@ -17,7 +18,8 @@ namespace ChronoGGDesktopWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer NewGameTimer = new DispatcherTimer();        
+        DispatcherTimer NewGameTimer = new DispatcherTimer();
+
         bool loadedOk = true;
         string SteamUrl;
 
@@ -31,6 +33,7 @@ namespace ChronoGGDesktopWPF
 
             GetRSSData();                       
             StartDailyTimer();
+            CreateNotifyIcon();
         }
 
         private void StartDailyTimer()
@@ -47,6 +50,38 @@ namespace ChronoGGDesktopWPF
             int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
             NewGameTimer.Interval = new TimeSpan(0, targetMinutes , 0);
             NewGameTimer.Start();
+        }
+
+        private void CreateNotifyIcon()
+        {
+            ToolStripMenuItem[] items = new ToolStripMenuItem[] { new ToolStripMenuItem(), new ToolStripMenuItem() };
+            items[0].Text = "Show";
+            items[0].Click += new EventHandler(NotifyShow);
+            items[1].Text = "Exit";
+            items[1].Click += new EventHandler(NotifyExit);
+
+            NotifyIcon notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = Properties.Resources.Chrono;
+            notifyIcon.ContextMenuStrip = new ContextMenuStrip();
+            notifyIcon.ContextMenuStrip.Items.AddRange(items);
+            notifyIcon.Visible = true;
+            notifyIcon.Click += NotifyIcon_Click;
+        }
+
+        private void NotifyIcon_Click(object sender, System.EventArgs e)
+        {
+            NotifyIcon notifyIcon = (NotifyIcon)sender;
+            notifyIcon.ContextMenuStrip.Show(System.Windows.Forms.Control.MousePosition);          
+        }
+
+        private void NotifyShow(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void NotifyExit(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
