@@ -45,9 +45,12 @@ namespace ChronoGGDesktopWPF
                 NewGameTime = NewGameTime.AddDays(1);
 
             TimeSpan duration = NewGameTime - utcNow;
-
+            
             int ensureChangeDelay = 5;
             int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
+
+            Console.WriteLine(targetMinutes.ToString());
+
             NewGameTimer.Interval = new TimeSpan(0, targetMinutes , 0);
             NewGameTimer.Start();
         }
@@ -138,8 +141,7 @@ namespace ChronoGGDesktopWPF
             {
                 if (m.Value.EndsWith(".jpg"))
                     gameUrl = m.Value;
-
-                if (m.Value.StartsWith("http://store.steampowered"))
+                else if (m.Value.StartsWith("http://store.steampowered"))
                     steamLink = m.Value;
 
                 if (gameUrl != "" && steamLink != "")
