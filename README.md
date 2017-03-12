@@ -14,4 +14,7 @@ Dont forget to check the Chrone [Chrono.gg](https://chrono.gg/) with this deskto
 * ~~Handel no internet~~
 
 * Test Start on boot
-* Test new game timer
+* ~~Test new game timer~~
+
+* Move settings into file
+* Installer ?

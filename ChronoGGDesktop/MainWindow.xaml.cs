@@ -49,8 +49,7 @@ namespace ChronoGGDesktopWPF
             int ensureChangeDelay = 5;
             int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
 
-            Console.WriteLine(targetMinutes.ToString());
-
+            NewGameTimer.Tick += dispatcherTimer_Tick;
             NewGameTimer.Interval = new TimeSpan(0, targetMinutes , 0);
             NewGameTimer.Start();
         }
@@ -202,7 +201,7 @@ namespace ChronoGGDesktopWPF
         private void LoadSettings()
         {
             PartnerTextBox.Text = Properties.Settings.Default.Partner;
-            StarOnBootCheckBox.IsChecked = Properties.Settings.Default.StarOnBoot;
+            StarOnBootCheckBox.IsChecked = CheckStartupRegistry();
             HideOnCloseCheckBox.IsChecked = Properties.Settings.Default.HideOnClose;
             ShowOnNewGameCheckBox.IsChecked = Properties.Settings.Default.ShowOnNewGame;
         }
@@ -233,10 +232,8 @@ namespace ChronoGGDesktopWPF
         }
 
         private void StarOnBootChanged(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.StarOnBoot = StarOnBootCheckBox.IsChecked ?? false;
-            RegisterInStartup(Properties.Settings.Default.StarOnBoot);
-            Properties.Settings.Default.Save();
+        {        
+            RegisterInStartup(StarOnBootCheckBox.IsChecked ?? false);
         }
 
         private void ShowOnNewGameChanged(object sender, RoutedEventArgs e)
@@ -265,19 +262,24 @@ namespace ChronoGGDesktopWPF
             Properties.Settings.Default.Save();
         }
 
+
+        private bool CheckStartupRegistry()
+        {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Assembly curAssembly = Assembly.GetExecutingAssembly();
+
+            return registryKey.GetValue(curAssembly.GetName().Name) != null;
+        }
+
         private void RegisterInStartup(bool isChecked)
         {
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             Assembly curAssembly = Assembly.GetExecutingAssembly();
-           
+
             if (isChecked)
-            {
                 registryKey.SetValue(curAssembly.GetName().Name, curAssembly.Location);
-            }
             else
-            {
-                registryKey.DeleteValue("ApplicationName");
-            }
+                registryKey.DeleteValue(curAssembly.GetName().Name);
         }
     }
 }

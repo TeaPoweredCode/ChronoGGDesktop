@@ -61,18 +61,6 @@ namespace ChronoGGDesktopWPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool StarOnBoot {
-            get {
-                return ((bool)(this["StarOnBoot"]));
-            }
-            set {
-                this["StarOnBoot"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NoSet")]
         public string Postion {
             get {
