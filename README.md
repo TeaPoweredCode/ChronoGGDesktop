@@ -2,9 +2,18 @@
 
 ![AppIamge](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGG.jpg)
 
-Dont forget to check the Chrone [Chrono.gg](https://chrono.gg/) with this desktop reminder
+See what the [Chrono.gg](https://chrono.gg/) daily game is with this desktop reminder.
 
 ---
+
+Download current build [V0.5](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)
+
+---
+
+It should be noted I affiliation [Chrono.gg](https://chrono.gg/) and this a personal project that is not endorsed by [Chrono.gg](https://chrono.gg/)
+
+---
+
 #Still do do
 
 * ~~Start on boot~~
@@ -16,5 +25,5 @@ Dont forget to check the Chrone [Chrono.gg](https://chrono.gg/) with this deskto
 * Test Start on boot
 * ~~Test new game timer~~
 
-* Move settings into file
+* Move settings into file ?
 * Installer ?
