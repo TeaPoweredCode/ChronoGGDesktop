@@ -10,7 +10,7 @@ Download current build [V0.5](https://raw.githubusercontent.com/MrLuxan/ChronoGG
 
 ---
 
-It should be noted I am not affiliation [Chrono.gg](https://chrono.gg/) and this a personal project that is not endorsed by [Chrono.gg](https://chrono.gg/)
+It should be noted I am not with affiliation [Chrono.gg](https://chrono.gg/) and this a personal project that is not endorsed by [Chrono.gg](https://chrono.gg/)
 
 ---
 
