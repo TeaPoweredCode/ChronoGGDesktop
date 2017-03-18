@@ -28,7 +28,7 @@
             <Label x:Name="PopOnNewGameLable" Content="Show on new game" Canvas.Left="4" Canvas.Top="99" Foreground="#FFFFCC00" Opacity="0.5"/>
             <Label Content="Start on bootup" Canvas.Left="4" Canvas.Top="37" Foreground="#FFFFCC00"/>
             <CheckBox x:Name="StarOnBootCheckBox" Canvas.Left="180" Canvas.Top="48" Background="#FF281236" BorderBrush="#FFFFCC00" Style="{DynamicResource CheckBoxStyle1}" Checked="StarOnBootChanged" Unchecked="StarOnBootChanged"/>
-            <Label x:Name="PopOnNewGameLable_Copy" Content="V0.5" Canvas.Top="179" Foreground="#FFFFCC00" Opacity="0.15" FontSize="8"/>
+            <Label x:Name="PopOnNewGameLable_Copy" Content="V0.6" Canvas.Top="179" Foreground="#FFFFCC00" Opacity="0.15" FontSize="8"/>
             <Label Content="?" Foreground="#FFFFCC00" Canvas.Left="65" FontWeight="Bold" ToolTip="Chrono.gg partner program id  e.g totalbiscuit" Canvas.Top="4"/>
         </Canvas>
 

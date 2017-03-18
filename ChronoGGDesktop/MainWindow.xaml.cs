@@ -37,22 +37,33 @@ namespace ChronoGGDesktopWPF
         }
 
         private void StartDailyTimer()
-        {       
-            DateTime utcNow = DateTime.UtcNow;
-            DateTime NewGameTime = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddHours(17);
+        {
+            DateTime pacificTime = CurrentPacificTime();
 
-            if (utcNow.Hour >= 17)
+            DateTime NewGameTime = new DateTime(pacificTime.Year, pacificTime.Month, pacificTime.Day).AddHours(9);
+
+            if (pacificTime.Hour >= 9)
                 NewGameTime = NewGameTime.AddDays(1);
 
-            TimeSpan duration = NewGameTime - utcNow;
+            TimeSpan duration = NewGameTime - pacificTime;
             
-            int ensureChangeDelay = 5;
+            int ensureChangeDelay = 3;
             int targetMinutes = (int)Math.Ceiling(duration.TotalMinutes) + ensureChangeDelay;
 
             NewGameTimer.Tick += dispatcherTimer_Tick;
             NewGameTimer.Interval = new TimeSpan(0, targetMinutes , 0);
             NewGameTimer.Start();
         }
+
+        static DateTime CurrentPacificTime()
+        {
+            TimeZoneInfo zone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+            DateTime utcNow = DateTime.UtcNow;
+            DateTime pacificNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, zone);
+
+            return pacificNow;
+        }
+
 
         private void CreateNotifyIcon()
         {
