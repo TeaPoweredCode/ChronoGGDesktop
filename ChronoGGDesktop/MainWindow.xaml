@@ -14,8 +14,8 @@
         <Label x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Margin="8,243,0,-3" Width="57" Background="{x:Null}" Foreground="#FFFFCC00" FontWeight="Bold" ForceCursor="True" Cursor="Hand" MouseLeftButtonDown="SettingsButton_MouseLeftButtonDown"/>
         <Canvas x:Name="GameCanvas" HorizontalAlignment="Left" Height="200" Margin="10,45,0,0" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.395,0.495">
             <Image x:Name="GameImage" HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Source="Resources/PlaceHolder.jpg" MouseLeftButtonUp="ChronoLink_MouseLeftButtonUp" Cursor="Hand" Canvas.Left="0" Canvas.Top="0"/>
-            <Canvas HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="36" Background="#FF282828" Canvas.Left="161" Canvas.Top="161">
-                <Image HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="Resources/SteamButton.jpg" Canvas.Left="3" Canvas.Top="3" Cursor="Hand" MouseLeftButtonUp="SteamButton_MouseLeftButtonUp"/>
+            <Canvas x:Name="SteamLinkButtonBG" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="36" Background="#FF282828" Canvas.Left="161" Canvas.Top="161">
+                <Image x:Name="SteamLinkButton" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="Resources/SteamButton.jpg" Canvas.Left="3" Canvas.Top="3" Cursor="Hand" MouseLeftButtonUp="SteamButton_MouseLeftButtonUp"/>
             </Canvas>
             <TextBlock x:Name="TitleTextBox" Canvas.Left="0" TextWrapping="Wrap" Text="GameTitle" Canvas.Top="0" Height="Auto" Width="200" Foreground="White" Padding="5,5,5,5" Background="#7F000000" Margin="0" Cursor="Hand" MouseLeftButtonUp="ChronoLink_MouseLeftButtonUp"/>
         </Canvas>
@@ -28,7 +28,7 @@
             <Label x:Name="PopOnNewGameLable" Content="Show on new game" Canvas.Left="4" Canvas.Top="99" Foreground="#FFFFCC00" Opacity="0.5"/>
             <Label Content="Start on bootup" Canvas.Left="4" Canvas.Top="37" Foreground="#FFFFCC00"/>
             <CheckBox x:Name="StarOnBootCheckBox" Canvas.Left="180" Canvas.Top="48" Background="#FF281236" BorderBrush="#FFFFCC00" Style="{DynamicResource CheckBoxStyle1}" Checked="StarOnBootChanged" Unchecked="StarOnBootChanged"/>
-            <Label x:Name="PopOnNewGameLable_Copy" Content="V0.6" Canvas.Top="179" Foreground="#FFFFCC00" Opacity="0.15" FontSize="8"/>
+            <Label x:Name="PopOnNewGameLable_Copy" Content="V0.7" Canvas.Top="179" Foreground="#FFFFCC00" Opacity="0.15" FontSize="8"/>
             <Label Content="?" Foreground="#FFFFCC00" Canvas.Left="65" FontWeight="Bold" ToolTip="Chrono.gg partner program id  e.g totalbiscuit" Canvas.Top="4"/>
         </Canvas>
 

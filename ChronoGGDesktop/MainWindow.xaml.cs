@@ -129,7 +129,11 @@ namespace ChronoGGDesktopWPF
                 GetDescriptionUrls(description, out gameUrl, out steamLink);
 
                 BitmapImage logo = new BitmapImage(new Uri(gameUrl));
-                SteamUrl = steamLink;
+
+                if (steamLink != "")
+                    SteamUrl = steamLink;
+                else
+                    SteamLinkButtonBG.Visibility = System.Windows.Visibility.Hidden;
 
                 TitleTextBox.Text = title;
                 GameImage.Source = logo;
@@ -190,7 +194,7 @@ namespace ChronoGGDesktopWPF
 
         private void OpenUrl(string url)
         {
-            if (loadedOk)
+            if (loadedOk && url != "")
                 System.Diagnostics.Process.Start(url);
         }
 
