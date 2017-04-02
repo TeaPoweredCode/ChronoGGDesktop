@@ -6,7 +6,7 @@ See what the [Chrono.gg](https://chrono.gg/) daily game is with this desktop rem
 
 ---
 
-Download current build [V0.6](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)
+Download current build [V0.7](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)
 
 ---
 
