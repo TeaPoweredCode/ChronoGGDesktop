@@ -1,4 +1,6 @@
 # ChronoGGDesktop - Still in development
+(This project has been retired as chrono.gg is no longer operating)
+
 
 ![AppIamge](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGG.jpg)
 
@@ -6,7 +8,7 @@ See what the [Chrono.gg](https://chrono.gg/) daily game is with this desktop rem
 
 ---
 
-Download current build [V0.7](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)
+~~Download current build (https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)~~
 
 ---
 
