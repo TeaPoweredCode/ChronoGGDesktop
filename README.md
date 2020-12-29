@@ -1,4 +1,4 @@
-# ChronoGGDesktop - Still in development
+# ChronoGGDesktop
 (This project has been retired as chrono.gg is no longer operating)
 
 
