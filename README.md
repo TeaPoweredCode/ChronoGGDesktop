@@ -1,15 +1,8 @@
 # ChronoGGDesktop
-(This project has been retired as chrono.gg is no longer operating)
+Chrono.gg ~~is~~ was a video game store that offers one game a day with a large discount. <br>
+This gadget allows you to see the daily game right on your desktop reminder.
 
 
 ![AppIamge](https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGG.jpg)
 
-See what the [Chrono.gg](https://chrono.gg/) daily game is with this desktop reminder.
-
----
-
-~~Download current build (https://raw.githubusercontent.com/MrLuxan/ChronoGGDesktop/master/ChronoGGDesktop.exe)~~
-
----
-
-DISCLAIMER: I am not in anyway affiliated with [Chrono.gg](https://chrono.gg/) , this is a personal project which is not endorsed by [Chrono.gg](https://chrono.gg/)
+*(Chrono.gg was shut down in October of 2020)*
